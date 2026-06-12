@@ -1,0 +1,130 @@
+/* src/index.css */
+/* stylelint-disable at-rule-no-unknown */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable at-rule-no-unknown */
+/* @import url(./create-post.css);
+@import url(./explore.css);
+@import url(./feed.css);
+@import url(./login.css);
+@import url(./register.css);
+@import url(./user-profile.css);
+@import url(./navbar.css);
+@import url(./posts.css); */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+/* Scrollbar Styles */
+
+::-webkit-scrollbar {
+  width: 6px; /* Width of the scrollbar */
+  height: 6px; /* Height of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Track color */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Thumb color */
+  border-radius: 6px; /* Roundness of the thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Thumb color on hover */
+}
+
+.loading .logo {
+  position: absolute;
+  left: calc(50% - 76px);
+  top: -4px;
+}
+
+.loading .triangle {
+  position: absolute;
+  left: calc(50% - 60px);
+  top: 0;
+}
+
+.loading .triangle-1 {
+  animation: scale 2s ease-in-out infinite;
+}
+
+.loading .triangle-2 {
+  animation: scale 2s ease-in-out infinite 0.3s;
+}
+
+.loading .triangle-3 {
+  animation: scale 2s ease-in-out infinite 0.6s;
+}
+
+@keyframes scale {
+  0%,
+  100% {
+    transform: scale(0.8);
+    transform-origin: center center;
+    opacity: 0.25;
+  }
+  50% {
+    transform: scale(1.2);
+    transform-origin: center center;
+    opacity: 0.8;
+  }
+}
+
+/* Toast Container margin */
+.Toastify__toast-container {
+  padding: 10px;
+}
+
+/* Toast border radius and padding */
+.Toastify__toast {
+  border-radius: 12px !important;
+  padding: 16px !important;
+  min-height: 64px;
+}
+
+/* Optional: Different radius for different toast types */
+.Toastify__toast--success {
+  border-radius: 12px !important;
+  padding: 16px !important;
+}
+
+.Toastify__toast--error {
+  border-radius: 12px !important;
+  padding: 16px !important;
+}
+
+.Toastify__toast--warning {
+  border-radius: 12px !important;
+  padding: 16px !important;
+}
+
+.Toastify__toast--info {
+  border-radius: 12px !important;
+  padding: 16px !important;
+}
+
+/* Toast body padding adjustment */
+.Toastify__toast-body {
+  padding: 0;
+  margin: 0;
+}
+
+/* Progress bar border radius */
+.Toastify__progress-bar {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+[data-simplebar] *:focus-visible {
+  outline: none !important;
+}
+/* 
+.container {
+  max-width: 1440px;
+  margin: 2rem auto;
+} */
