@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react'
+import { ReactTyped } from 'react-typed'
 
 import Posts from '@/components/Posts'
+
 import { fetchPosts } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
-import { ReactTyped } from 'react-typed'
 
 const Feed: FC = () => {
   const [posts, setPosts] = useState<Post[]>([])

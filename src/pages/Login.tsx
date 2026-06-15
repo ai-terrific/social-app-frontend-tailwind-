@@ -1,11 +1,11 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { loginUser } from '@/services'
 import { dispatch, login } from '@/store'
 import { EmailPassword } from '@/types'
 import { handleError } from '@/utils'
-import { useNavigate } from 'react-router-dom'
 
 const Login: FC = () => {
   const navigate = useNavigate()

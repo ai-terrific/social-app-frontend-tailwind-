@@ -1,5 +1,5 @@
-import { useLogout, useUser } from '@/hooks'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { useLogout, useUser } from '@/hooks'
 
 export default function NavMenu() {
   const profile = useUser()

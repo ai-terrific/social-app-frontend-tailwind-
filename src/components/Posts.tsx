@@ -1,13 +1,13 @@
 import { FC, FormEvent, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
+import { MessageCircleMore, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { formatDistance } from 'date-fns'
 
 import { commentOnPost, upVotePost, downVotePost } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
 import { useIsLoggedIn } from '@/hooks'
 import CommentItem from './Comment'
-import { MessageCircleMore, ThumbsDown, ThumbsUp } from 'lucide-react'
-import { formatDistance } from 'date-fns'
 
 interface PostsProps {
   post: Post

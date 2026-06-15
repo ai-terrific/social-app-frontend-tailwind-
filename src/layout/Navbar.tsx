@@ -1,11 +1,13 @@
-import { useIsLoggedIn } from '../hooks/useIsLoggedIn'
-import { useUser } from '@/hooks/useUser'
-import { useLogout } from '@/hooks/useLogout'
-import NavbarItem from '@/components/NavbarItem'
-import { Dialog, DialogPanel } from '@headlessui/react'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import { Dialog, DialogPanel } from '@headlessui/react'
+
+import NavbarItem from '@/components/NavbarItem'
 import NavMenu from '@/components/NavMenu'
+
+import { useIsLoggedIn } from '@/hooks/useIsLoggedIn'
+import { useUser } from '@/hooks/useUser'
+import { useLogout } from '@/hooks/useLogout'
 
 const Links = [
   { to: '/explore', label: 'Explore' },

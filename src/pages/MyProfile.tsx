@@ -1,9 +1,10 @@
 import { FC, useEffect, useState } from 'react'
 
-import { fetchProfile } from '@/services'
-import { Profile, User } from '@/types'
-import { handleError } from '@/utils'
 import UserInfoItem from '@/components/UserInfoItem'
+
+import { fetchProfile } from '@/services'
+import { Profile } from '@/types'
+import { handleError } from '@/utils'
 
 const MyProfile: FC = () => {
   const [user, setUser] = useState<Profile | null>(null)
@@ -17,12 +18,12 @@ const MyProfile: FC = () => {
     }
   }
 
+  const followers = user?.followers ?? []
+  const following = user?.following ?? []
+
   useEffect(() => {
     fetchUser()
   }, [])
-
-  const followers = user?.followers ?? []
-  const following = user?.following ?? []
 
   return (
     <div className='mx-auto container m-5'>

@@ -1,6 +1,6 @@
-import { Comment } from '@/types'
-import { formatDistance } from 'date-fns'
 import { FC } from 'react'
+import { formatDistance } from 'date-fns'
+import { Comment } from '@/types'
 
 interface CommentProps {
   comment: Comment

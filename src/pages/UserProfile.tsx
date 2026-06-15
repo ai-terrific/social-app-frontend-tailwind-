@@ -1,10 +1,11 @@
 import { FC, useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+
+import UserInfoItem from '@/components/UserInfoItem'
 
 import { fetchUserById } from '@/services'
 import { Profile } from '@/types'
 import { handleError } from '@/utils'
-import { useParams } from 'react-router-dom'
-import UserInfoItem from '@/components/UserInfoItem'
 
 const UserProfile: FC = () => {
   const { userId } = useParams()
