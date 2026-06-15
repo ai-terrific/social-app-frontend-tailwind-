@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 import { ReactTyped } from 'react-typed'
 
-import Posts from '@/components/Posts'
+import PostList from '@/components/Post/PostList'
 
 import { fetchPosts } from '@/services'
 import { Post } from '@/types'
@@ -31,9 +31,7 @@ const Feed: FC = () => {
         typeSpeed={40}
         backSpeed={60}
       />
-      <ul className='mt-4'>
-        {posts.length > 0 && posts.map(post => <Posts key={post._id} post={post} getPost={getPosts} />)}
-      </ul>
+      <PostList posts={posts} getPosts={getPosts} />
     </div>
   )
 }

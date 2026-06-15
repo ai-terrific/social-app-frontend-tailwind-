@@ -55,10 +55,10 @@ const UserProfile: FC = () => {
         <div className='col-span-3'>
           <TabGroup>
             <TabList>
-              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 rounded-full mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
                 Followers
               </Tab>
-              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 rounded-full mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
                 Following
               </Tab>
             </TabList>

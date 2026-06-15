@@ -11,10 +11,10 @@ import CommentItem from './Comment'
 
 interface PostsProps {
   post: Post
-  getPost: () => Promise<void>
+  getPosts: () => Promise<void>
 }
 
-const Posts: FC<PostsProps> = ({ post, getPost }) => {
+const Posts: FC<PostsProps> = ({ post, getPosts }) => {
   const isLoggedIn = useIsLoggedIn()
   const upVotesCount = post.upVotes?.length ?? 0
   const downVotesCount = post.downVotes?.length ?? 0
@@ -33,7 +33,7 @@ const Posts: FC<PostsProps> = ({ post, getPost }) => {
 
       const response = await commentOnPost(post._id, { content })
       commentInput.value = ''
-      getPost()
+      getPosts()
       setViewComments(true)
       toast.success(response.message, { hideProgressBar: true })
     } catch (err) {
@@ -45,7 +45,7 @@ const Posts: FC<PostsProps> = ({ post, getPost }) => {
     if (!postId) return
     try {
       const response = await upVotePost(postId)
-      getPost()
+      getPosts()
       toast.success(response.message, { hideProgressBar: true })
     } catch (err) {
       handleError(err)
@@ -56,7 +56,7 @@ const Posts: FC<PostsProps> = ({ post, getPost }) => {
     if (!postId) return
     try {
       const response = await downVotePost(postId)
-      getPost()
+      getPosts()
       toast.success(response.message, { hideProgressBar: true })
     } catch (err) {
       handleError(err)
