@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react'
 
 import UserInfoItem from '@/components/UserInfoItem'
 
@@ -52,19 +53,32 @@ const UserProfile: FC = () => {
           </div>
         </div>
         <div className='col-span-3'>
-          <h3 className='text-3xl text-white font-bold my-4'>Followers</h3>
-          {followers.length > 0 ? (
-            followers.map(follower => <UserInfoItem key={follower._id} user={follower} />)
-          ) : (
-            <p className='text-gray-400'>No followers to display.</p>
-          )}
-
-          <h3 className='text-3xl text-white font-bold mb-4'>Following</h3>
-          {following.length > 0 ? (
-            following.map(following => <UserInfoItem key={following._id} user={following} />)
-          ) : (
-            <p className='text-gray-400'>No followings to display.</p>
-          )}
+          <TabGroup>
+            <TabList>
+              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 rounded-full mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                Followers
+              </Tab>
+              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 rounded-full mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                Following
+              </Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                {followers.length > 0 ? (
+                  followers.map(follower => <UserInfoItem key={follower._id} user={follower} />)
+                ) : (
+                  <p className='text-gray-400'>No followers to display.</p>
+                )}
+              </TabPanel>
+              <TabPanel>
+                {following.length > 0 ? (
+                  following.map(following => <UserInfoItem key={following._id} user={following} />)
+                ) : (
+                  <p className='text-gray-400'>No followings to display.</p>
+                )}
+              </TabPanel>
+            </TabPanels>
+          </TabGroup>
         </div>
       </div>
     </div>
