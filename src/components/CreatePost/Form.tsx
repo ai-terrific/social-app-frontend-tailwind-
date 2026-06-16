@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { createPost } from '@/services'
@@ -14,11 +14,14 @@ const CreatePostForm: FC = () => {
   })
   const [loading, setLoading] = useState(false)
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value })
+    },
+    [formData]
+  )
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       setLoading(true)
@@ -30,7 +33,7 @@ const CreatePostForm: FC = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   return (
     <form className='mt-4 space-y-4' onSubmit={handleSubmit}>

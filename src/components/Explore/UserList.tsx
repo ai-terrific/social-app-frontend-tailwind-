@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useCallback } from 'react'
 
 import UserItem from '@/components/Explore/UserItem'
 import { fetchExploreUsers, followUser, unfollowUser } from '@/services/userService'
@@ -9,7 +9,7 @@ const UserList: FC = () => {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(false)
 
-  const handleFollow = async (userId: string) => {
+  const handleFollow = useCallback(async (userId: string) => {
     try {
       const response = await followUser(userId)
       if (!response.users) return
@@ -17,9 +17,9 @@ const UserList: FC = () => {
     } catch (err) {
       handleError(err)
     }
-  }
+  }, [])
 
-  const handleUnfollow = async (userId: string) => {
+  const handleUnfollow = useCallback(async (userId: string) => {
     try {
       const response = await unfollowUser(userId)
       if (!response.users) return
@@ -27,9 +27,9 @@ const UserList: FC = () => {
     } catch (err) {
       handleError(err)
     }
-  }
+  }, [])
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     setLoading(true)
     try {
       const response = await fetchExploreUsers()
@@ -39,7 +39,7 @@ const UserList: FC = () => {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     fetchUsers()

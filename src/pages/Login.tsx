@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
@@ -14,22 +14,28 @@ const Login: FC = () => {
     password: ''
   })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value })
+    },
+    [formData]
+  )
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
 
-    try {
-      const response = await loginUser(formData)
-      if (response.token) dispatch(login(response))
-      toast.success(response.message, { hideProgressBar: true })
-      navigate('/')
-    } catch (err) {
-      handleError(err)
-    }
-  }
+      try {
+        const response = await loginUser(formData)
+        if (response.token) dispatch(login(response))
+        toast.success(response.message, { hideProgressBar: true })
+        navigate('/')
+      } catch (err) {
+        handleError(err)
+      }
+    },
+    [formData]
+  )
 
   return (
     <div className='flex min-h-full flex-col justify-center'>

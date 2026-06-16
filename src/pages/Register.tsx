@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { signUpUser } from '@/services'
 import { handleError } from '@/utils'
-import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   username: string
@@ -19,11 +19,14 @@ const Register: FC = () => {
     password: ''
   })
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value })
+    },
+    [formData]
+  )
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       const response = await signUpUser(formData)
@@ -32,7 +35,7 @@ const Register: FC = () => {
     } catch (err) {
       handleError(err)
     }
-  }
+  }, [])
 
   return (
     <div className='flex min-h-full flex-col justify-center'>

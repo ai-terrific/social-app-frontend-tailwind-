@@ -1,4 +1,4 @@
-import { FC, FormEvent, useEffect, useState } from 'react'
+import { FC, FormEvent, memo, useEffect, useState, useCallback } from 'react'
 import { toast } from 'react-toastify'
 import { MessageCircleMore, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { formatDistance } from 'date-fns'
@@ -14,15 +14,16 @@ interface PostItemProps {
   getPosts: () => Promise<void>
 }
 
-const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
+const PostItem: FC<PostItemProps> = memo(({ post, getPosts }) => {
   const isLoggedIn = useIsLoggedIn()
   const upVotesCount = post.upVotes?.length ?? 0
   const downVotesCount = post.downVotes?.length ?? 0
   const comments = post.comments ?? []
 
+  const [isLoaded, setIsLoaded] = useState(false)
   const [viewComments, setViewComments] = useState<boolean>(false)
 
-  const handleComment = async (e: FormEvent<HTMLFormElement>) => {
+  const handleComment = useCallback(async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const commentInput = e.currentTarget.elements.namedItem('comment') as HTMLInputElement | null
 
@@ -39,9 +40,9 @@ const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
     } catch (err) {
       handleError(err)
     }
-  }
+  }, [])
 
-  const upVote = async (postId?: string) => {
+  const upVote = useCallback(async (postId?: string) => {
     if (!postId) return
     try {
       const response = await upVotePost(postId)
@@ -50,9 +51,9 @@ const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
     } catch (err) {
       handleError(err)
     }
-  }
+  }, [])
 
-  const downVote = async (postId?: string) => {
+  const downVote = useCallback(async (postId?: string) => {
     if (!postId) return
     try {
       const response = await downVotePost(postId)
@@ -61,9 +62,7 @@ const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
     } catch (err) {
       handleError(err)
     }
-  }
-
-  const [isLoaded, setIsLoaded] = useState(false)
+  }, [])
 
   useEffect(() => {
     setIsLoaded(true)
@@ -124,6 +123,6 @@ const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
       )}
     </li>
   )
-}
+})
 
 export default PostItem
