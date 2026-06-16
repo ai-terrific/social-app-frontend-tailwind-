@@ -6,10 +6,14 @@ import UserInfoItem from '@/components/UserInfoItem'
 import { fetchUserById } from '@/services'
 import { Profile } from '@/types'
 import { handleError } from '@/utils'
+import { useIsLoggedIn, useUser } from '@/hooks'
 
 const UserProfile: FC = () => {
   const { userId } = useParams()
+  const isLoggedIn = useIsLoggedIn()
+  const profile = useUser()
   const [user, setUser] = useState<Profile | null>(null)
+  const [edit, setEdit] = useState<boolean>(false)
 
   const followers = user?.followers ?? []
   const following = user?.following ?? []
@@ -49,46 +53,67 @@ const UserProfile: FC = () => {
                 </p>
               </div>
               <p>{user?.email}</p>
+              {isLoggedIn && profile?._id === user?._id && (
+                <button
+                  className='bg-white/20 hover:bg-white/30 w-full text-white py-1 px-2 rounded transition'
+                  onClick={() => setEdit(prev => !prev)}
+                >
+                  {edit ? 'Save' : 'Edit Profile'}
+                </button>
+              )}
+              {isLoggedIn && profile?._id === user?._id && edit && (
+                <textarea
+                  name='introduction'
+                  id='introduction'
+                  placeholder='About me'
+                  rows={10}
+                  autoFocus
+                  required
+                  className='w-full p-4 rounded-lg bg-white/10 text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 transition'
+                />
+              )}
             </div>
           </div>
         </div>
         <div className='col-span-3'>
-          <TabGroup>
-            <TabList>
-              <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
-                Followers
-                {followers.length > 0 && (
-                  <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
-                    {followers.length}
-                  </span>
-                )}
-              </Tab>
-              <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
-                Following
-                {following.length > 0 && (
-                  <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
-                    {following.length}
-                  </span>
-                )}
-              </Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                {followers.length > 0 ? (
-                  followers.map(follower => <UserInfoItem key={follower._id} user={follower} />)
-                ) : (
-                  <p className='text-gray-400'>No followers to display.</p>
-                )}
-              </TabPanel>
-              <TabPanel>
-                {following.length > 0 ? (
-                  following.map(following => <UserInfoItem key={following._id} user={following} />)
-                ) : (
-                  <p className='text-gray-400'>No followings to display.</p>
-                )}
-              </TabPanel>
-            </TabPanels>
-          </TabGroup>
+          {isLoggedIn && profile?._id === user?._id && (
+            <TabGroup>
+              <TabList>
+                <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                  Followers
+                  {followers.length > 0 && (
+                    <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
+                      {followers.length}
+                    </span>
+                  )}
+                </Tab>
+                <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                  Following
+                  {following.length > 0 && (
+                    <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
+                      {following.length}
+                    </span>
+                  )}
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  {followers.length > 0 ? (
+                    followers.map(follower => <UserInfoItem key={follower._id} user={follower} />)
+                  ) : (
+                    <p className='text-gray-400'>No followers to display.</p>
+                  )}
+                </TabPanel>
+                <TabPanel>
+                  {following.length > 0 ? (
+                    following.map(following => <UserInfoItem key={following._id} user={following} />)
+                  ) : (
+                    <p className='text-gray-400'>No followings to display.</p>
+                  )}
+                </TabPanel>
+              </TabPanels>
+            </TabGroup>
+          )}
         </div>
       </div>
     </div>

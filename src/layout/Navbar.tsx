@@ -81,12 +81,12 @@ export default function Header() {
               </ul>
               <div className='py-6'>
                 {isLoggedIn && (
-                  <Link
-                    to={`/user/${profile?._id}`}
+                  <a
+                    href={`/user/${profile?._id}`}
                     className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5 cursor-pointer'
                   >
                     Profile
-                  </Link>
+                  </a>
                 )}
                 {isLoggedIn ? (
                   <a

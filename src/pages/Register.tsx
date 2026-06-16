@@ -26,16 +26,19 @@ const Register: FC = () => {
     [formData]
   )
 
-  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      const response = await signUpUser(formData)
-      navigate('/login')
-      toast.success(response.message, { hideProgressBar: true })
-    } catch (err) {
-      handleError(err)
-    }
-  }, [])
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      try {
+        const response = await signUpUser(formData)
+        navigate('/login')
+        toast.success(response.message, { hideProgressBar: true })
+      } catch (err) {
+        handleError(err)
+      }
+    },
+    [formData]
+  )
 
   return (
     <div className='flex min-h-full flex-col justify-center'>

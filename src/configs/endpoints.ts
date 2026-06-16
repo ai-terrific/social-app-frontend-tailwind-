@@ -7,8 +7,7 @@ export const API_ENDPOINTS = {
     EXPLORE: `user/explore`,
     FOLLOW: (userId: string) => `user/${userId}/follow`,
     UNFOLLOW: (userId: string) => `user/${userId}/unfollow`,
-    GET: (userId: string) => `user/${userId}`,
-    PROFILE: `user/profile`
+    GET: (userId: string) => `user/${userId}`
   },
   POST: {
     CREATE: 'post/create',
