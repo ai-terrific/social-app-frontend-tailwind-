@@ -33,11 +33,3 @@ export const fetchUserById = async (userId: string): Promise<FetchUserRes> => {
     errorMessage: 'Failed to get profile'
   })
 }
-
-export const fetchProfile = async (): Promise<FetchUserRes> => {
-  return apiRequest({
-    method: 'GET',
-    url: API_ENDPOINTS.USER.PROFILE,
-    errorMessage: 'Failed to get profile'
-  })
-}

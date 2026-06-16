@@ -1,4 +1,5 @@
 import { FC, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import { useIsLoggedIn, useUser } from '@/hooks'
 import { User } from '@/types'
@@ -29,9 +30,9 @@ const UserItem: FC<UserItemProps> = ({ user, handleFollow, handleUnfollow }) => 
         <span className='avatar bg-gray-500 text-purple rounded-full lg:w-36 lg:h-36 w-24 h-24 flex items-center justify-center text-6xl font-bold'>
           {user.username.charAt(0)}
         </span>
-        <a href={`/user/${user._id}`} className='text-3xl font-bold hover:underline'>
+        <Link to={`/user/${user._id}`} className='text-3xl font-bold hover:underline'>
           <span className='text-3xl font-bold'>{user.username}</span>
-        </a>
+        </Link>
         {isLoggedIn && profile?._id && user.followers.includes(profile._id) && (
           <button
             className='bg-red-500 hover:bg-red-600 w-full text-white py-1 px-2 rounded transition'

@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 import { signUpUser } from '@/services'
@@ -125,9 +125,9 @@ const Register: FC = () => {
 
         <p className='mt-10 text-center text-sm/6 text-gray-400'>
           Already have an account?{' '}
-          <a href='/login' className='font-semibold text-indigo-400 hover:text-indigo-300'>
+          <Link to='/login' className='font-semibold text-indigo-400 hover:text-indigo-300'>
             Sign in
-          </a>
+          </Link>
         </p>
       </div>
     </div>

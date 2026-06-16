@@ -13,7 +13,6 @@ const Explore = lazy(() => import('@/pages/Explore'))
 const Create = lazy(() => import('@/pages/CreatePost'))
 const Feed = lazy(() => import('@/pages/Feed'))
 const UserProfile = lazy(() => import('@/pages/UserProfile'))
-const MyProfile = lazy(() => import('@/pages/MyProfile'))
 
 const routes = createBrowserRouter([
   {

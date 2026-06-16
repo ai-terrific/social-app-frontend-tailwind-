@@ -3,6 +3,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import SimpleBarCore from 'simplebar-core'
 
 import LoadingFallback from '@/components/Loading'
+
 import Navbar from './Navbar'
 
 const Layout = () => {

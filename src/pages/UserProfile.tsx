@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
+import { Link, useParams } from 'react-router-dom'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react'
+
 import UserInfoItem from '@/components/UserInfoItem'
 import { fetchUserById } from '@/services'
 import { Profile } from '@/types'
@@ -36,9 +36,9 @@ const UserProfile: FC = () => {
               {user?.username.charAt(0)}
             </span>
             <div className='flex flex-col gap-3 items-center'>
-              <a href={`/user/${user?._id}`} className='text-3xl font-bold hover:underline'>
+              <Link to={`/user/${user?._id}`} className='text-3xl font-bold hover:underline'>
                 <span className='text-3xl font-bold'>{user?.username}</span>
-              </a>
+              </Link>
               <div className='inline-flex gap-4'>
                 <p>
                   <b>{user?.followers.length}</b> Followers

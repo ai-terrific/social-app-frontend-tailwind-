@@ -1,8 +1,7 @@
 import { FC, useEffect, useState } from 'react'
-import { ReactTyped } from 'react-typed'
 
 import PostList from '@/components/Post/PostList'
-
+import Typing from '@/components/Typing'
 import { fetchPosts } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
@@ -24,13 +23,7 @@ const Feed: FC = () => {
 
   return (
     <div className='mx-auto container m-5'>
-      <ReactTyped
-        className='text-4xl font-bold text-white'
-        showCursor={false}
-        strings={[`Total ${posts.length} posts`]}
-        typeSpeed={40}
-        backSpeed={60}
-      />
+      <Typing titles={[`Total ${posts.length} posts`]} />
       <PostList posts={posts} getPosts={getPosts} />
     </div>
   )

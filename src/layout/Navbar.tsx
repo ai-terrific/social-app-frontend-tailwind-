@@ -1,13 +1,13 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 
 import NavbarItem from '@/components/NavbarItem'
 import NavMenu from '@/components/NavMenu'
-
 import { useIsLoggedIn } from '@/hooks/useIsLoggedIn'
-import { useUser } from '@/hooks/useUser'
 import { useLogout } from '@/hooks/useLogout'
+import { useUser } from '@/hooks'
 
 const Links = [
   { to: '/', label: 'Explore' },
@@ -17,6 +17,7 @@ const Links = [
 
 export default function Header() {
   const isLoggedIn = useIsLoggedIn()
+  const profile = useUser()
   const logOut = useLogout()
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
@@ -25,9 +26,9 @@ export default function Header() {
     <header className='sticky w-screen inset-x-0 top-0 z-50 backdrop-blur-sm bg-black/50'>
       <nav aria-label='Global' className='container mx-auto flex items-center justify-between p-6 lg:px-8'>
         <div className='flex lg:flex-1'>
-          <a href='/' className='-m-1.5 p-1.5'>
+          <Link to='/' className='-m-1.5 p-1.5'>
             <img alt='Social App Logo' src='/logo.png' className='h-8 w-auto' />
-          </a>
+          </Link>
         </div>
         <div className='flex lg:hidden'>
           <button
@@ -50,9 +51,9 @@ export default function Header() {
           {isLoggedIn ? (
             <NavMenu />
           ) : (
-            <a href='/login' className='text-lg font-semibold text-white px-3 py-1.5 rounded-lg hover:bg-white/5'>
+            <Link to='/login' className='text-lg font-semibold text-white px-3 py-1.5 rounded-lg hover:bg-white/5'>
               Log in <span aria-hidden='true'>&rarr;</span>
-            </a>
+            </Link>
           )}
         </div>
       </nav>
@@ -80,12 +81,12 @@ export default function Header() {
               </ul>
               <div className='py-6'>
                 {isLoggedIn && (
-                  <a
-                    href='/profile'
+                  <Link
+                    to={`/user/${profile?._id}`}
                     className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5 cursor-pointer'
                   >
                     Profile
-                  </a>
+                  </Link>
                 )}
                 {isLoggedIn ? (
                   <a
@@ -97,12 +98,12 @@ export default function Header() {
                     Log out
                   </a>
                 ) : (
-                  <a
-                    href='/login'
+                  <Link
+                    to='/login'
                     className='-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-white/5'
                   >
                     Log in
-                  </a>
+                  </Link>
                 )}
               </div>
             </div>

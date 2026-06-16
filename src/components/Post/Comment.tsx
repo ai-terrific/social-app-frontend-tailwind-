@@ -1,5 +1,7 @@
 import { FC } from 'react'
 import { formatDistance } from 'date-fns'
+import { Link } from 'react-router-dom'
+
 import { Comment } from '@/types'
 
 interface CommentProps {
@@ -14,9 +16,9 @@ const CommentItem: FC<CommentProps> = ({ comment }) => {
         <span className='text-sm text-gray-400 mr-3'>
           {formatDistance(new Date(comment.createdAt!), Date.now(), { addSuffix: true })}
         </span>
-        <a href={`/user/${comment.user?._id}`} className='text-sm text-white font-bold hover:underline'>
+        <Link to={`/user/${comment.user?._id}`} className='text-sm text-white font-bold hover:underline'>
           {comment.user?.username}
-        </a>
+        </Link>
       </div>
     </li>
   )

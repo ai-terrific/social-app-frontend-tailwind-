@@ -8,6 +8,7 @@ import { Post } from '@/types'
 import { handleError } from '@/utils'
 import { useIsLoggedIn } from '@/hooks'
 import CommentItem from './Comment'
+import { Link } from 'react-router-dom'
 
 interface PostItemProps {
   post: Post
@@ -80,9 +81,9 @@ const PostItem: FC<PostItemProps> = memo(({ post, getPosts }) => {
         <span className='text-sm text-gray-400'>
           {formatDistance(new Date(post.createdAt!), Date.now(), { addSuffix: true })}
         </span>
-        <a href={`/user/${post.user?._id}`} className='text-sm text-white font-bold hover:underline'>
+        <Link to={`/user/${post.user?._id}`} className='text-sm text-white font-bold hover:underline'>
           {post.user?.username}
-        </a>
+        </Link>
       </div>
       <p className='text-base text-gray-400 p-4 break-all'>{post.content}</p>
       <div className='flex items-center'>
