@@ -55,10 +55,6 @@ const routes = createBrowserRouter([
         element: <Feed />
       },
       {
-        path: routers.Profile,
-        element: <MyProfile />
-      },
-      {
         path: routers.Create,
         element: <Create />
       },

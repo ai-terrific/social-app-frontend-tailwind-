@@ -21,7 +21,7 @@ export default function NavMenu() {
         <div className='py-1'>
           <MenuItem>
             <a
-              href='/profile'
+              href={`/user/${profile?._id}`}
               className='block px-4 py-2 text-sm text-gray-300 hover:bg-white/5 hover:text-white hover:outline-hidden'
             >
               Profile
