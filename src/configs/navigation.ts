@@ -1,6 +1,6 @@
 export const routers = {
   Home: '/',
-  Explore: '/explore',
+  Feed: '/feed',
   Login: '/login',
   Register: '/register',
   Profile: '/profile',

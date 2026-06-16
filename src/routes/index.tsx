@@ -21,11 +21,11 @@ const routes = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: routers.Home,
+        path: routers.Feed,
         element: <Feed />
       },
       {
-        path: routers.Explore,
+        path: routers.Home,
         element: <Explore />
       },
       {

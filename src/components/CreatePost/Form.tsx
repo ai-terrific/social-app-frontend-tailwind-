@@ -4,8 +4,10 @@ import { toast } from 'react-toastify'
 import { createPost } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
+import { useNavigate } from 'react-router-dom'
 
 const CreatePostForm: FC = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<Post>({
     title: '',
     content: ''
@@ -21,6 +23,7 @@ const CreatePostForm: FC = () => {
     try {
       setLoading(true)
       const response = await createPost(formData)
+      navigate('/feed')
       toast.success(response.status, { hideProgressBar: true })
     } catch (err) {
       handleError(err)

@@ -10,14 +10,13 @@ import { useUser } from '@/hooks/useUser'
 import { useLogout } from '@/hooks/useLogout'
 
 const Links = [
-  { to: '/explore', label: 'Explore' },
-  { to: '/', label: 'Feed' },
+  { to: '/', label: 'Explore' },
+  { to: '/feed', label: 'Feed' },
   { to: '/create', label: 'Create Post' }
 ]
 
 export default function Header() {
   const isLoggedIn = useIsLoggedIn()
-  const profile = useUser()
   const logOut = useLogout()
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false)
