@@ -16,7 +16,7 @@ export interface Post {
   upVotes?: string[]
   downVotes?: string[]
   comments?: Comment[]
-  createdAt?: string
+  createdAt?: Date
 }
 
 export interface PostCreateRes {

@@ -52,6 +52,7 @@ const UserItem: FC<UserItemProps> = ({ user, handleFollow, handleUnfollow }) => 
           <p>
             <b>{user.followers.length}</b> Followers
           </p>
+          ·
           <p>
             <b>{user.following.length}</b> Following
           </p>

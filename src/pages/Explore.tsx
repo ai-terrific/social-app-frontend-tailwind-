@@ -9,9 +9,9 @@ const Explore: FC = () => {
       <ReactTyped
         className='text-4xl font-bold text-white'
         strings={['Explore Users']}
+        showCursor={false}
         typeSpeed={40}
         backSpeed={60}
-        cursorChar=''
       />
       <UserList />
     </div>

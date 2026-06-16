@@ -42,6 +42,7 @@ const MyProfile: FC = () => {
                 <p>
                   <b>{user?.followers.length}</b> Followers
                 </p>
+                ·
                 <p>
                   <b>{user?.following.length}</b> Following
                 </p>
@@ -53,11 +54,21 @@ const MyProfile: FC = () => {
         <div className='col-span-3'>
           <TabGroup>
             <TabList>
-              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+              <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
                 Followers
+                {followers.length > 0 && (
+                  <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
+                    {followers.length}
+                  </span>
+                )}
               </Tab>
-              <Tab className='selected:bg-blue-500 selected:text-white text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+              <Tab className='focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
                 Following
+                {following.length > 0 && (
+                  <span className='absolute bg-purple-700 text-green-100 px-2 py-1 text-xs font-bold rounded-full -top-3 -right-3'>
+                    {following.length}
+                  </span>
+                )}
               </Tab>
             </TabList>
             <TabPanels>

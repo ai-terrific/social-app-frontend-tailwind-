@@ -9,12 +9,12 @@ import { handleError } from '@/utils'
 import { useIsLoggedIn } from '@/hooks'
 import CommentItem from './Comment'
 
-interface PostsProps {
+interface PostItemProps {
   post: Post
   getPosts: () => Promise<void>
 }
 
-const Posts: FC<PostsProps> = ({ post, getPosts }) => {
+const PostItem: FC<PostItemProps> = ({ post, getPosts }) => {
   const isLoggedIn = useIsLoggedIn()
   const upVotesCount = post.upVotes?.length ?? 0
   const downVotesCount = post.downVotes?.length ?? 0
@@ -126,4 +126,4 @@ const Posts: FC<PostsProps> = ({ post, getPosts }) => {
   )
 }
 
-export default Posts
+export default PostItem

@@ -4,8 +4,8 @@ interface EntityId {
 }
 
 interface Entity extends EntityId {
-  createdAt: string
-  updatedAt: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export default Entity
