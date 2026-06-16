@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 
 import { signUpUser } from '@/services'
 import { handleError } from '@/utils'
+import { useNavigate } from 'react-router-dom'
 
 interface FormData {
   username: string
@@ -11,6 +12,7 @@ interface FormData {
 }
 
 const Register: FC = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState<FormData>({
     username: '',
     email: '',
@@ -25,6 +27,7 @@ const Register: FC = () => {
     e.preventDefault()
     try {
       const response = await signUpUser(formData)
+      navigate('/login')
       toast.success(response.message, { hideProgressBar: true })
     } catch (err) {
       handleError(err)
