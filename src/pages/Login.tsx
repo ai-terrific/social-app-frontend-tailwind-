@@ -25,7 +25,7 @@ const Login: FC = () => {
       const response = await loginUser(formData)
       if (response.token) dispatch(login(response))
       toast.success(response.message, { hideProgressBar: true })
-      navigate('/explore')
+      navigate('/')
     } catch (err) {
       handleError(err)
     }

@@ -21,10 +21,6 @@ const routes = createBrowserRouter([
     element: <MainLayout />,
     children: [
       {
-        path: routers.Feed,
-        element: <Feed />
-      },
-      {
         path: routers.Home,
         element: <Explore />
       },
@@ -54,6 +50,10 @@ const routes = createBrowserRouter([
       </PrivateRoute>
     ),
     children: [
+      {
+        path: routers.Feed,
+        element: <Feed />
+      },
       {
         path: routers.Profile,
         element: <MyProfile />

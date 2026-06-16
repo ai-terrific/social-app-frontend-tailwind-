@@ -41,7 +41,7 @@ export default function Header() {
         </div>
         <ul className='hidden lg:flex gap-x-24 cursor-pointer'>
           {Links.map(link => {
-            if (isLoggedIn || (!isLoggedIn && link.label !== 'Create Post')) {
+            if (isLoggedIn || (!isLoggedIn && link.label === 'Explore')) {
               return <NavbarItem link={link} key={link.label} />
             }
           })}
@@ -73,7 +73,7 @@ export default function Header() {
             <div className='-my-6 divide-y divide-white/10'>
               <ul className='space-y-2 py-6 list-none'>
                 {Links.map(link => {
-                  if (isLoggedIn || (!isLoggedIn && link.label !== 'Create Post')) {
+                  if (isLoggedIn || (!isLoggedIn && link.label === 'Explore')) {
                     return <NavbarItem link={link} key={link.label} />
                   }
                 })}
