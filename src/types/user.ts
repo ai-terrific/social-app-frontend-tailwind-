@@ -12,6 +12,7 @@ export interface User extends Entity {
   _id: string
   email: string
   username: string
+  avatar: string
   followers: string[]
   following: string[]
 }
@@ -20,6 +21,7 @@ export interface Profile extends Entity {
   _id: string
   email: string
   username: string
+  avatar: string
   followers: User[]
   following: User[]
 }

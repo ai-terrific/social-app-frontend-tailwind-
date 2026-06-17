@@ -1,12 +1,13 @@
-import { FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react'
 
 import UserInfoItem from '@/components/UserInfoItem'
-import { fetchUserById } from '@/services'
+import { fetchUserById, setAvatar } from '@/services'
 import { Profile } from '@/types'
 import { handleError } from '@/utils'
 import { useIsLoggedIn, useUser } from '@/hooks'
+import { BASE_URL } from '@/configs'
 
 const UserProfile: FC = () => {
   const { userId } = useParams()
@@ -14,6 +15,11 @@ const UserProfile: FC = () => {
   const profile = useUser()
   const [user, setUser] = useState<Profile | null>(null)
   const [edit, setEdit] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
 
   const followers = user?.followers ?? []
   const following = user?.following ?? []
@@ -26,6 +32,48 @@ const UserProfile: FC = () => {
       handleError(err)
     }
   }
+  const handleUploadButtonClick = () => {
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files
+
+    if (!files || files.length === 0) {
+      setSelectedFile(null)
+      setPreviewUrl(null)
+      return
+    }
+
+    if (files && files.length > 0) {
+      setSelectedFile(files[0])
+      setPreviewUrl(URL.createObjectURL(files[0]))
+    }
+  }
+
+  const handleUpload = async () => {
+    if (!selectedFile) return
+
+    const formData = new FormData()
+    formData.append('avatar', selectedFile)
+
+    try {
+      setLoading(true)
+      await setAvatar(formData)
+      setSelectedFile(null)
+      setPreviewUrl(null)
+      await fetchUser()
+    } catch (err) {
+      handleError(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!previewUrl) return
+    return () => URL.revokeObjectURL(previewUrl)
+  }, [previewUrl])
 
   useEffect(() => {
     fetchUser()
@@ -36,9 +84,38 @@ const UserProfile: FC = () => {
       <div className='lg:grid lg:grid-cols-4 gap-4 flex flex-col'>
         <div className='col-span'>
           <div className='flex lg:flex-col items-center gap-6 lg:gap-3 justify-center w-full text-white'>
-            <span className='avatar bg-gray-500 text-white rounded-full max-sm:w-24 max-sm:h-24 w-36 h-36 flex items-center justify-center text-6xl font-bold'>
-              {user?.username.charAt(0)}
-            </span>
+            <div className='relative avatar bg-gray-500 text-white rounded-full max-sm:w-24 max-sm:h-24 w-36 h-36 flex items-center justify-center text-6xl font-bold'>
+              {loading ? (
+                <div className='w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin' />
+              ) : user?.avatar || previewUrl ? (
+                <img
+                  src={previewUrl ? previewUrl : `${BASE_URL}/${user?.avatar}`}
+                  alt='preview'
+                  className='rounded-full'
+                />
+              ) : (
+                user?.username.charAt(0)
+              )}
+              {isLoggedIn && profile?._id === user?._id && (
+                <>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    ref={fileInputRef}
+                    className='hidden'
+                    id='avatar-upload'
+                    onChange={handleFileChange}
+                  />
+                  <button
+                    type='button'
+                    className='absolute text-xs bg-white/20 hover:bg-white/30 p-2 flex items-center rounded-md h-6 absolute -bottom-4 -right-4'
+                    onClick={previewUrl ? handleUpload : handleUploadButtonClick}
+                  >
+                    {previewUrl ? 'Upload' : 'Edit'}
+                  </button>
+                </>
+              )}
+            </div>
             <div className='flex flex-col gap-3 items-center'>
               <Link to={`/user/${user?._id}`} className='text-3xl font-bold hover:underline'>
                 <span className='text-3xl font-bold'>{user?.username}</span>

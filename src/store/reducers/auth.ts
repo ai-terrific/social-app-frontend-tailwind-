@@ -21,11 +21,6 @@ const authSlice = createSlice({
       state.isLoggedIn = false
       state.user = null
       state.token = null
-    },
-    updateUser(state, action: PayloadAction<Partial<AuthState['user']>>) {
-      if (state.isLoggedIn && state.user) {
-        state.user = { ...state.user, ...action.payload }
-      }
     }
   }
 })

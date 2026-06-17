@@ -33,3 +33,12 @@ export const fetchUserById = async (userId: string): Promise<FetchUserRes> => {
     errorMessage: 'Failed to get profile'
   })
 }
+
+export const setAvatar = async (data: FormData) => {
+  return apiRequest({
+    method: 'POST',
+    data,
+    url: API_ENDPOINTS.USER.AVATAR,
+    errorMessage: 'Failed to set avatar'
+  })
+}

@@ -5,10 +5,7 @@ import { dispatch, logout, store } from '@/store'
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: `${BASE_URL}/api/`,
-  timeout: 60000, // Timeout in milliseconds
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  timeout: 60000 // Timeout in milliseconds
 })
 
 // Add a request interceptor

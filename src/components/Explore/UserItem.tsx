@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { useIsLoggedIn, useUser } from '@/hooks'
 import { User } from '@/types'
+import { BASE_URL } from '@/configs'
 
 interface UserItemProps {
   user: User
@@ -28,7 +29,11 @@ const UserItem: FC<UserItemProps> = ({ user, handleFollow, handleUnfollow }) => 
     >
       <div className='flex flex-col items-center gap-3 justify-center w-full'>
         <span className='avatar bg-gray-500 text-purple rounded-full lg:w-36 lg:h-36 w-24 h-24 flex items-center justify-center text-6xl font-bold'>
-          {user.username.charAt(0)}
+          {user.avatar ? (
+            <img src={`${BASE_URL}/${user.avatar}`} alt='avatar' className='rounded-full' />
+          ) : (
+            user.username.charAt(0)
+          )}
         </span>
         <Link to={`/user/${user._id}`} className='text-3xl font-bold hover:underline'>
           <span className='text-3xl font-bold'>{user.username}</span>

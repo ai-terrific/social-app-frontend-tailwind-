@@ -1,5 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { useLogout, useUser } from '@/hooks'
+import { BASE_URL } from '@/configs'
 
 export default function NavMenu() {
   const logOut = useLogout()
@@ -7,10 +8,12 @@ export default function NavMenu() {
   return (
     <Menu as='div' className='relative inline-block transition-all'>
       <MenuButton className='inline-flex w-full justify-center rounded-md text-sm font-semibold text-white'>
-        <div className='flex items-center gap-4 rounded-lg hover:bg-white/5 cursor-pointer'>
-          <span className='avatar bg-gray-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-lg font-bold'>
-            {profile?.username.charAt(0)}
-          </span>
+        <div className='w-12 h-12 flex items-center justify-center text-2xl bg-white/20 rounded-full hover:bg-white/30 cursor-pointer'>
+          {profile?.avatar ? (
+            <img src={`${BASE_URL}/${profile.avatar}`} alt='avatar' className='rounded-full' />
+          ) : (
+            profile?.username.charAt(0)
+          )}
         </div>
       </MenuButton>
 

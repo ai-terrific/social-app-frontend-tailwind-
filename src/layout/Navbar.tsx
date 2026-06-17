@@ -24,7 +24,11 @@ export default function Header() {
 
   return (
     <header className='sticky w-screen inset-x-0 top-0 z-50 backdrop-blur-sm bg-black/50'>
-      <nav aria-label='Global' className='container mx-auto flex items-center justify-between p-6 lg:px-8'>
+      <nav
+        aria-label='Global'
+        className='container mx-auto flex items-center justify-between p-4 lg:px-8'
+        role='navigation'
+      >
         <div className='flex lg:flex-1'>
           <Link to='/' className='-m-1.5 p-1.5'>
             <img alt='Social App Logo' src='/logo.png' className='h-8 w-auto' />
