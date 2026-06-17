@@ -3,11 +3,12 @@ import { Link, useParams } from 'react-router-dom'
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/react'
 
 import UserInfoItem from '@/components/UserInfoItem'
-import { fetchUserById, setAvatar } from '@/services'
+import { fetchUserById, setAvatar, updateIntroduction } from '@/services'
 import { Profile } from '@/types'
 import { handleError } from '@/utils'
 import { useIsLoggedIn, useUser } from '@/hooks'
 import { BASE_URL } from '@/configs'
+import { toast } from 'react-toastify'
 
 const UserProfile: FC = () => {
   const { userId } = useParams()
@@ -20,6 +21,8 @@ const UserProfile: FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+
+  const [introduction, setIntroduction] = useState<string>('')
 
   const followers = user?.followers ?? []
   const following = user?.following ?? []
@@ -74,6 +77,19 @@ const UserProfile: FC = () => {
     if (!previewUrl) return
     return () => URL.revokeObjectURL(previewUrl)
   }, [previewUrl])
+
+  const handleClick = async () => {
+    try {
+      if (edit) {
+        const response = await updateIntroduction(introduction)
+        setUser(response.user)
+        toast.success(response.message, { hideProgressBar: true })
+        setEdit(false)
+      } else setEdit(prev => !prev)
+    } catch (err) {
+      handleError(err)
+    }
+  }
 
   useEffect(() => {
     fetchUser()
@@ -133,7 +149,7 @@ const UserProfile: FC = () => {
               {isLoggedIn && profile?._id === user?._id && (
                 <button
                   className='bg-white/20 hover:bg-white/30 w-full text-white py-1 px-2 rounded transition'
-                  onClick={() => setEdit(prev => !prev)}
+                  onClick={handleClick}
                 >
                   {edit ? 'Save' : 'Edit Profile'}
                 </button>
@@ -145,6 +161,8 @@ const UserProfile: FC = () => {
                   placeholder='About me'
                   rows={10}
                   autoFocus
+                  value={introduction}
+                  onChange={e => setIntroduction(e.target.value)}
                   required
                   className='w-full p-4 rounded-lg bg-white/10 text-white outline-1 -outline-offset-1 outline-white/10 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 transition'
                 />
@@ -156,6 +174,9 @@ const UserProfile: FC = () => {
           {isLoggedIn && profile?._id === user?._id && (
             <TabGroup>
               <TabList>
+                <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                  About me
+                </Tab>
                 <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
                   Followers
                   {followers.length > 0 && (
@@ -174,6 +195,15 @@ const UserProfile: FC = () => {
                 </Tab>
               </TabList>
               <TabPanels>
+                <TabPanel>
+                  <div className='text-white text-lg p-4'>
+                    {user?.introduction ? (
+                      <p className='text-gray-400'>{user.introduction}</p>
+                    ) : (
+                      <p className='text-gray-400'>No introduction to display.</p>
+                    )}
+                  </div>
+                </TabPanel>
                 <TabPanel>
                   {followers.length > 0 ? (
                     followers.map(follower => <UserInfoItem key={follower._id} user={follower} />)

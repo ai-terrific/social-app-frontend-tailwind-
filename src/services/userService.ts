@@ -42,3 +42,12 @@ export const setAvatar = async (data: FormData) => {
     errorMessage: 'Failed to set avatar'
   })
 }
+
+export const updateIntroduction = async (introduction: string): Promise<FetchUserRes> => {
+  return apiRequest({
+    method: 'POST',
+    data: { introduction },
+    url: API_ENDPOINTS.USER.INTRODUCTION,
+    errorMessage: 'Failed to set introduction'
+  })
+}

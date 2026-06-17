@@ -22,7 +22,7 @@ const Feed: FC = () => {
   }, [])
 
   return (
-    <div className='mx-auto container m-5'>
+    <div className='mx-auto container p-5'>
       <Typing titles={[`Total ${posts.length} posts`]} />
       <PostList posts={posts} getPosts={getPosts} />
     </div>

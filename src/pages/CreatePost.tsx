@@ -5,7 +5,7 @@ import Typing from '@/components/Typing'
 
 const CreatePost: FC = () => {
   return (
-    <div className='mx-auto container m-5'>
+    <div className='mx-auto container p-5'>
       <Typing titles={['Type your post']} />
       <CreatePostForm />
     </div>
