@@ -171,7 +171,7 @@ const UserProfile: FC = () => {
           </div>
         </div>
         <div className='col-span-3'>
-          {isLoggedIn && profile?._id === user?._id && (
+          {isLoggedIn && profile?._id === user?._id ? (
             <TabGroup>
               <TabList>
                 <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
@@ -217,6 +217,25 @@ const UserProfile: FC = () => {
                   ) : (
                     <p className='text-gray-400'>No followings to display.</p>
                   )}
+                </TabPanel>
+              </TabPanels>
+            </TabGroup>
+          ) : (
+            <TabGroup>
+              <TabList>
+                <Tab className='relative focus:bg-gray-500 text-white px-4 py-2 border-t border-r border-l rounded-t-xl mr-4 mb-2 font-bold text-2xl hover:bg-white/30 transition'>
+                  About me
+                </Tab>
+              </TabList>
+              <TabPanels>
+                <TabPanel>
+                  <div className='text-white text-lg p-4'>
+                    {user?.introduction ? (
+                      <p className='text-gray-400'>{user.introduction}</p>
+                    ) : (
+                      <p className='text-gray-400'>No introduction to display.</p>
+                    )}
+                  </div>
                 </TabPanel>
               </TabPanels>
             </TabGroup>
