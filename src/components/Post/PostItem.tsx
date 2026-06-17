@@ -1,22 +1,22 @@
 import { FC, FormEvent, memo, useEffect, useState, useCallback } from 'react'
-import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 import { MessageCircleMore, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { formatDistance } from 'date-fns'
 
-import { commentOnPost, upVotePost, downVotePost } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
 import { useIsLoggedIn } from '@/hooks'
 import CommentItem from './Comment'
-import { Link } from 'react-router-dom'
+import { useSocket } from '@/hooks/useSocket'
 
 interface PostItemProps {
   post: Post
-  getPosts: () => Promise<void>
+  getPosts: () => void
 }
 
 const PostItem: FC<PostItemProps> = memo(({ post, getPosts }) => {
   const isLoggedIn = useIsLoggedIn()
+  const socket = useSocket()
   const upVotesCount = post.upVotes?.length ?? 0
   const downVotesCount = post.downVotes?.length ?? 0
   const comments = post.comments ?? []
@@ -28,45 +28,54 @@ const PostItem: FC<PostItemProps> = memo(({ post, getPosts }) => {
     e.preventDefault()
     const commentInput = e.currentTarget.elements.namedItem('comment') as HTMLInputElement | null
 
-    if (!commentInput || !post._id) return
+    if (!commentInput || !post._id || !socket) return
 
     try {
       const content = commentInput.value
-
-      const response = await commentOnPost(post._id, { content })
+      socket.emit('addComment', { postId: post._id, content })
       commentInput.value = ''
-      getPosts()
       setViewComments(true)
-      toast.success(response.message, { hideProgressBar: true })
     } catch (err) {
       handleError(err)
     }
   }, [])
 
   const upVote = useCallback(async (postId?: string) => {
-    if (!postId) return
+    if (!postId || !socket) return
     try {
-      const response = await upVotePost(postId)
-      getPosts()
-      toast.success(response.message, { hideProgressBar: true })
+      socket.emit('upVote', { postId: post._id })
     } catch (err) {
       handleError(err)
     }
   }, [])
 
   const downVote = useCallback(async (postId?: string) => {
-    if (!postId) return
+    if (!postId || !socket) return
     try {
-      const response = await downVotePost(postId)
-      getPosts()
-      toast.success(response.message, { hideProgressBar: true })
+      socket.emit('downVote', { postId: post._id })
     } catch (err) {
       handleError(err)
     }
   }, [])
 
   useEffect(() => {
-    setIsLoaded(true)
+    if (!socket) return
+
+    try {
+      setIsLoaded(true)
+      socket.on('commentAdd', (data: { message: string; postId: string }) => {
+        getPosts()
+        if (data.postId === post._id) setViewComments(true)
+      })
+      socket.on('votePost', (data: { message: string }) => {
+        getPosts()
+      })
+      socket.on('downVotePost', (data: { message: string }) => {
+        getPosts()
+      })
+    } catch (err) {
+      handleError(err)
+    }
   }, [])
 
   return (

@@ -12,11 +12,9 @@ const rootElement = document.getElementById('root')
 const root = ReactDOM.createRoot(rootElement!)
 
 root.render(
-  <StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persister}>
-        <App />
-      </PersistGate>
-    </Provider>
-  </StrictMode>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persister}>
+      <App />
+    </PersistGate>
+  </Provider>
 )

@@ -1,13 +1,15 @@
-import { ChangeEvent, FC, FormEvent, useCallback, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useCallback, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { createPost } from '@/services'
 import { Post } from '@/types'
 import { handleError } from '@/utils'
 import { useNavigate } from 'react-router-dom'
+import { useSocket } from '@/hooks/useSocket'
 
 const CreatePostForm: FC = () => {
   const navigate = useNavigate()
+  const socket = useSocket()
   const [formData, setFormData] = useState<Post>({
     title: '',
     content: ''
@@ -21,19 +23,22 @@ const CreatePostForm: FC = () => {
     [formData]
   )
 
-  const handleSubmit = useCallback(async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    try {
-      setLoading(true)
-      const response = await createPost(formData)
-      navigate('/feed')
-      toast.success(response.status, { hideProgressBar: true })
-    } catch (err) {
-      handleError(err)
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  const handleSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (!socket) return
+      try {
+        setLoading(true)
+        navigate('/feed')
+        socket.emit('createPost', formData)
+      } catch (err) {
+        handleError(err)
+      } finally {
+        setLoading(false)
+      }
+    },
+    [formData]
+  )
 
   return (
     <form className='mt-4 space-y-4' onSubmit={handleSubmit}>

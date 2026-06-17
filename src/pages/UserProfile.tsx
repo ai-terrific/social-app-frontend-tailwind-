@@ -31,6 +31,7 @@ const UserProfile: FC = () => {
     try {
       const response = await fetchUserById(userId!)
       setUser(response.user)
+      setIntroduction(response.user.introduction)
     } catch (err) {
       handleError(err)
     }

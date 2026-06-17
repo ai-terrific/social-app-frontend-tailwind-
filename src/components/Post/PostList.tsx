@@ -6,7 +6,7 @@ import { Post } from '@/types'
 
 interface PostListProps {
   posts: Post[]
-  getPosts: () => Promise<void>
+  getPosts: () => void
 }
 
 const PostList: FC<PostListProps> = ({ posts, getPosts }) => {

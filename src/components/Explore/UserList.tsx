@@ -50,7 +50,7 @@ const UserList: FC = () => {
       {loading ? (
         <p className='text-white text-2xl font-bold'>loading...</p>
       ) : (
-        <ul className='grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+        <ul className='grid grid-cols-1 mt-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
           {users.map(user => (
             <UserItem key={user.email} user={user} handleFollow={handleFollow} handleUnfollow={handleUnfollow} />
           ))}
